@@ -5,8 +5,8 @@ const BASE_URL = "https://api.themoviedb.org/3";
 
 const instance = axios.create({
   baseURL: BASE_URL,
-  headers: {
-    Authorization: `Bearer ${API_KEY}`,
+  params: {
+    api_key: API_KEY,
   },
 });
 
@@ -16,7 +16,9 @@ export const fetchPopularMovies = async () => {
 };
 
 export const fetchMoviesByQuery = async (query) => {
-  const { data } = await instance.get("/search/movie", { params: { query } });
+  const { data } = await instance.get("/search/movie", {
+    params: { query },
+  });
   return data.results;
 };
 
