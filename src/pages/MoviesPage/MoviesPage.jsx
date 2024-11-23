@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { fetchMoviesByQuery } from "../../services/api";
+import MovieList from "../../components/MovieList/MovieList";
 
 const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
@@ -9,6 +10,7 @@ const MoviesPage = () => {
 
   useEffect(() => {
     if (!query) return;
+
     const fetchMovies = async () => {
       try {
         const results = await fetchMoviesByQuery(query);
@@ -48,17 +50,11 @@ const MoviesPage = () => {
         <button type="submit">Search</button>
       </form>
 
-      <ul>
-        {movies.length > 0 ? (
-          movies.map((movie) => (
-            <li key={movie.id}>
-              <p>{movie.title}</p>
-            </li>
-          ))
-        ) : (
-          <p>No movies found.</p>
-        )}
-      </ul>
+      {movies.length > 0 ? (
+        <MovieList movies={movies} />
+      ) : (
+        <p>No movies found.</p>
+      )}
     </div>
   );
 };
